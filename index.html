@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DPDP Readiness — Compliance Dossier</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper:      #F7F6F1;
+  --panel:      #FFFFFF;
+  --border:     #E3E0D5;
+  --ink:        #191B22;
+  --ink-soft:   #565349;
+  --muted:      #8A867A;
+
+  --indigo:     #2B2F72;
+  --indigo-deep:#1D2054;
+  --indigo-soft:#EEF0FA;
+
+  --ochre:      #B9782E;
+  --ochre-soft: #FBF1E3;
+
+  --sage:       #3E7A5C;
+  --sage-soft:  #EAF3EE;
+
+  --red:        #A93C3C;
+  --red-soft:   #FBEBEA;
+
+  --serif: 'Source Serif 4', Georgia, serif;
+  --sans:  'Source Sans 3', -apple-system, sans-serif;
+  --mono:  'Source Code Pro', monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ═══════════════ SHELL LAYOUT ═══════════════ */
+.shell {
+  display: grid;
+  grid-template-columns: 248px 1fr;
+  min-height: 100vh;
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+  background: var(--indigo-deep);
+  color: #EDEEF7;
+  padding: 28px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.brand-mark {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: #fff;
+}
+
+.brand-sub {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: #9EA3D4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.nav { display: flex; flex-direction: column; gap: 2px; }
+
+.nav-item {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: #C2C5E8;
+  padding: 10px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background 0.15s, color 0.15s;
+  user-select: none;
+}
+
+.nav-item .n-icon { font-size: 15px; width: 18px; text-align: center; opacity: 0.85; }
+
+.nav-item:hover { background: rgba(255,255,255,0.06); color: #fff; }
+.nav-item.active { background: #fff; color: var(--indigo-deep); }
+.nav-item.active .n-icon { opacity: 1; }
+
+.sidebar-footer {
+  margin-top: auto;
+  font-family: var(--sans);
+  font-size: 11px;
+  color: #7A7FBE;
+  line-height: 1.6;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 16px;
+}
+
+/* ── MAIN ── */
+.main { padding: 36px 44px; max-width: 1180px; }
+.page { display: none; }
+.page.active { display: block; animation: rise 0.25s ease; }
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+.page-eyebrow {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--indigo);
+  margin-bottom: 6px;
+}
+
+.page-title {
+  font-family: var(--serif);
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.page-desc {
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--ink-soft);
+  max-width: 620px;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+/* ═══════════════ CARDS / PANELS ═══════════════ */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 1px 2px rgba(25,27,34,0.04);
+}
+
+.panel-head {
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.panel-head-title {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--ink);
+}
+
+.panel-body { padding: 22px; }
+
+/* ── FORM ── */
+.field { margin-bottom: 18px; }
+.field label {
+  display: block;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+.field input {
+  width: 100%;
+  font-family: var(--mono);
+  font-size: 13px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--paper);
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.15s, background 0.15s;
+}
+.field input:focus { border-color: var(--indigo); background: #fff; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+.hint { font-family: var(--sans); font-size: 11px; color: var(--muted); margin-top: 5px; }
+
+/* ── BUTTONS ── */
+.btn {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.15s;
+}
+.btn-primary { background: var(--indigo); color: #fff; }
+.btn-primary:hover { background: var(--indigo-deep); }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-outline { background: #fff; color: var(--indigo); border-color: var(--border); }
+.btn-outline:hover { border-color: var(--indigo); }
+.btn-ghost { background: transparent; color: var(--ink-soft); border-color: transparent; padding: 8px 14px; }
+.btn-ghost:hover { color: var(--ink); background: var(--paper); }
+
+/* ═══════════════ DASHBOARD STAT CARDS ═══════════════ */
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
+.stat-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 20px;
+}
+.stat-card .s-label {
+  font-family: var(--sans); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted);
+  margin-bottom: 10px;
+}
+.stat-card .s-value { font-family: var(--serif); font-size: 26px; font-weight: 600; color: var(--ink); }
+.stat-card.accent-indigo .s-value { color: var(--indigo); }
+.stat-card.accent-sage .s-value { color: var(--sage); }
+.stat-card.accent-ochre .s-value { color: var(--ochre); }
+.stat-card .s-sub { font-family: var(--sans); font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+/* ═══════════════ STATUS BADGES ═══════════════ */
+.status-badge {
+  font-family: var(--sans); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 3px 9px; border-radius: 20px; display: inline-block;
+}
+.status-QUEUED       { background: var(--ochre-soft); color: var(--ochre); }
+.status-CRAWLING      { background: var(--indigo-soft); color: var(--indigo); }
+.status-CRAWL_COMPLETE{ background: var(--sage-soft); color: var(--sage); }
+.status-FAILED_CRAWL  { background: var(--red-soft); color: var(--red); }
+
+/* ═══════════════ SCAN RESULTS TABLE ═══════════════ */
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th {
+  font-family: var(--sans); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted);
+  text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+td {
+  font-family: var(--sans); font-size: 13px; color: var(--ink);
+  padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--paper); }
+.cell-url { font-family: var(--mono); font-size: 12px; color: var(--indigo); word-break: break-all; }
+.tag-priority {
+  font-family: var(--mono); font-size: 10px; background: var(--ochre-soft);
+  color: var(--ochre); padding: 2px 7px; border-radius: 4px; display: inline-block;
+}
+
+/* ═══════════════ EMPTY / LOADING ═══════════════ */
+.empty-state { text-align: center; padding: 56px 24px; color: var(--muted); }
+.empty-state .e-icon { font-family: var(--serif); font-size: 34px; margin-bottom: 10px; color: var(--border); }
+.empty-state .e-text { font-family: var(--sans); font-size: 13px; line-height: 1.8; }
+.spinner {
+  width: 15px; height: 15px; border: 2px solid rgba(255,255,255,0.35);
+  border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; display: inline-block;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ═══════════════ CHECKLIST — CLAUSE CARDS ═══════════════ */
+.checklist-progress {
+  display: flex; align-items: center; gap: 16px;
+  background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+  padding: 18px 22px; margin-bottom: 24px;
+}
+.cp-track { flex: 1; height: 8px; background: var(--paper); border-radius: 4px; overflow: hidden; border: 1px solid var(--border); }
+.cp-fill { height: 100%; background: linear-gradient(90deg, var(--sage), #5A9C7C); border-radius: 4px; transition: width 0.4s ease; width: 0%; }
+.cp-label { font-family: var(--sans); font-size: 13px; font-weight: 600; color: var(--ink); white-space: nowrap; }
+.cp-label span { color: var(--sage); }
+
+.clause-list { display: flex; flex-direction: column; gap: 12px; }
+
+.clause-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+.clause-card.verified { border-color: var(--sage); }
+
+.clause-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 18px 20px;
+  cursor: pointer;
+}
+
+.clause-check {
+  flex-shrink: 0;
+  width: 22px; height: 22px;
+  border: 2px solid var(--border);
+  border-radius: 5px;
+  margin-top: 2px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; color: transparent;
+  transition: all 0.15s;
+  cursor: pointer;
+}
+.clause-check:hover { border-color: var(--sage); }
+.clause-card.verified .clause-check { background: var(--sage); border-color: var(--sage); color: #fff; }
+
+.clause-tag {
+  font-family: var(--mono); font-size: 11px; font-weight: 500;
+  color: var(--indigo); background: var(--indigo-soft);
+  padding: 2px 8px; border-radius: 4px; flex-shrink: 0; margin-top: 1px;
+}
+
+.clause-main { flex: 1; min-width: 0; }
+.clause-title {
+  font-family: var(--sans); font-size: 14.5px; font-weight: 600; color: var(--ink);
+  margin-bottom: 4px;
+}
+.clause-desc {
+  font-family: var(--sans); font-size: 13px; color: var(--ink-soft); line-height: 1.55;
+}
+
+.clause-chevron {
+  flex-shrink: 0; font-size: 12px; color: var(--muted);
+  transition: transform 0.2s; margin-top: 4px;
+}
+.clause-card.expanded .clause-chevron { transform: rotate(180deg); }
+
+.clause-full {
+  display: none;
+  padding: 0 20px 20px 58px;
+  font-family: var(--serif);
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: var(--ink-soft);
+  border-top: 1px solid var(--border);
+  margin-top: -1px;
+  padding-top: 16px;
+}
+.clause-card.expanded .clause-full { display: block; }
+
+.disclaimer {
+  font-family: var(--sans); font-size: 11.5px; color: var(--muted);
+  background: var(--ochre-soft); border: 1px solid #EBD8B8;
+  border-radius: 8px; padding: 12px 16px; margin-bottom: 24px; line-height: 1.6;
+}
+.disclaimer strong { color: var(--ochre); }
+
+/* ═══════════════ EXPORT MENU ═══════════════ */
+.export-wrap { position: relative; display: inline-block; }
+.export-menu {
+  display: none;
+  position: absolute; right: 0; top: calc(100% + 6px);
+  background: #fff; border: 1px solid var(--border); border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(25,27,34,0.12);
+  min-width: 160px; z-index: 20; overflow: hidden;
+}
+.export-menu.open { display: block; }
+.export-menu button {
+  width: 100%; text-align: left; padding: 10px 14px;
+  font-family: var(--sans); font-size: 13px; color: var(--ink);
+  background: none; border: none; cursor: pointer;
+}
+.export-menu button:hover { background: var(--paper); }
+
+/* ═══════════════ SCAN LOOKUP ═══════════════ */
+.lookup-row { display: flex; gap: 10px; margin-bottom: 24px; }
+.lookup-row input {
+  flex: 1; font-family: var(--mono); font-size: 13px;
+  padding: 10px 12px; border: 1px solid var(--border); border-radius: 6px;
+  background: var(--panel);
+}
+
+@media print {
+  .sidebar, .lookup-row, .export-wrap, .btn { display: none !important; }
+  .shell { grid-template-columns: 1fr; }
+  .clause-full { display: block !important; }
+}
+
+@media (max-width: 900px) {
+  .shell { grid-template-columns: 1fr; }
+  .sidebar { flex-direction: row; overflow-x: auto; }
+  .stat-grid { grid-template-columns: 1fr 1fr; }
+  .main { padding: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ═══ SIDEBAR ═══ -->
+  <div class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">DPDP Readiness</div>
+      <div class="brand-sub">Compliance Dossier</div>
+    </div>
+
+    <div class="nav">
+      <div class="nav-item active" data-page="dashboard" onclick="switchPage('dashboard')">
+        <span class="n-icon">◆</span> Overview
+      </div>
+      <div class="nav-item" data-page="results" onclick="switchPage('results')">
+        <span class="n-icon">▤</span> Scan Results
+      </div>
+      <div class="nav-item" data-page="checklist" onclick="switchPage('checklist')">
+        <span class="n-icon">✓</span> Compliance Checklist
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      Phase 1 · MVP<br>
+      Public-facing readiness signals only. Not a substitute for legal review.
+    </div>
+  </div>
+
+  <!-- ═══ MAIN ═══ -->
+  <div class="main">
+
+    <!-- ═══ DASHBOARD ═══ -->
+    <div class="page active" id="page-dashboard">
+      <div class="page-eyebrow">Overview</div>
+      <div class="page-title">Start a new readiness scan</div>
+      <div class="page-desc">Crawl a company's public website to surface DPDP-relevant pages — privacy notices, consent flows, contact and grievance details — as a starting point for a compliance review.</div>
+
+      <div class="stat-grid">
+        <div class="stat-card accent-indigo">
+          <div class="s-label">Last Scan</div>
+          <div class="s-value" id="stat-last-status">—</div>
+          <div class="s-sub" id="stat-last-domain">No scans yet</div>
+        </div>
+        <div class="stat-card accent-sage">
+          <div class="s-label">Pages Crawled</div>
+          <div class="s-value" id="stat-pages">—</div>
+          <div class="s-sub">Most recent scan</div>
+        </div>
+        <div class="stat-card accent-ochre">
+          <div class="s-label">Checklist Progress</div>
+          <div class="s-value" id="stat-checklist">0%</div>
+          <div class="s-sub" id="stat-checklist-sub">0 of 11 clauses verified</div>
+        </div>
+        <div class="stat-card">
+          <div class="s-label">Page Limit</div>
+          <div class="s-value">50</div>
+          <div class="s-sub">Default per scan</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><span class="panel-head-title">New Scan</span></div>
+        <div class="panel-body">
+          <div class="field-row">
+            <div class="field">
+              <label>Company Website URL *</label>
+              <input type="text" id="input-url" placeholder="example.com" />
+              <div class="hint">HTTPS only. A scheme is added automatically if omitted.</div>
+            </div>
+            <div class="field">
+              <label>Company Name</label>
+              <input type="text" id="input-name" placeholder="Example Corp (optional)" />
+            </div>
+          </div>
+          <button class="btn btn-primary" onclick="startScan()" id="btn-start-scan">
+            <span>▶</span> Start Scan
+          </button>
+          <span id="scan-start-error" style="font-family:var(--sans);font-size:12px;color:var(--red);margin-left:12px;"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SCAN RESULTS ═══ -->
+    <div class="page" id="page-results">
+      <div class="page-eyebrow">Scan Results</div>
+      <div class="page-title">Crawled pages</div>
+      <div class="page-desc">Look up a scan by ID to review its status and every page discovered during the crawl.</div>
+
+      <div class="lookup-row">
+        <input type="text" id="input-scan-id" placeholder="Paste a scan ID…" />
+        <button class="btn btn-outline" onclick="lookupScan()">Look Up</button>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <span class="panel-head-title" id="results-title">No scan loaded</span>
+          <div class="export-wrap">
+            <button class="btn btn-ghost" id="btn-export" onclick="toggleExportMenu()" style="display:none;">Export ▾</button>
+            <div class="export-menu" id="export-menu">
+              <button onclick="exportScan('csv')">Download CSV</button>
+              <button onclick="exportScan('json')">Download JSON</button>
+              <button onclick="window.print()">Print / Save PDF</button>
+            </div>
+          </div>
+        </div>
+        <div id="results-body">
+          <div class="empty-state">
+            <div class="e-icon">▤</div>
+            <div class="e-text">Start a scan from Overview, then look it up here —<br>or paste a scan ID above.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ CHECKLIST ═══ -->
+    <div class="page" id="page-checklist">
+      <div class="page-eyebrow">Compliance Checklist</div>
+      <div class="page-title">Digital Personal Data Protection Act, 2023</div>
+      <div class="page-desc">Key obligations for Data Fiduciaries under the DPDP Act. Tick each clause once your organisation's practice has been manually verified against it.</div>
+
+      <div class="disclaimer">
+        <strong>Not legal advice.</strong> This checklist reflects a general summary of the DPDP Act, 2023 for orientation purposes only. Provisions of the Act are brought into force and detailed by rules issued over time — confirm current applicability with qualified legal counsel before relying on this for compliance decisions.
+      </div>
+
+      <div class="checklist-progress">
+        <div class="cp-label">Verified: <span id="cl-count">0</span> / <span id="cl-total">11</span></div>
+        <div class="cp-track"><div class="cp-fill" id="cl-bar"></div></div>
+        <button class="btn btn-ghost" onclick="window.print()">Print ▾</button>
+      </div>
+
+      <div class="clause-list" id="clause-list"></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const API = '';
+
+// ═══════════════ NAV ═══════════════
+function switchPage(name) {
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.toggle('active', n.dataset.page === name));
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+}
+
+// ═══════════════ DASHBOARD: START SCAN ═══════════════
+let lastScanId = localStorage.getItem('dpdp_last_scan_id') || null;
+
+async function startScan() {
+  const url = document.getElementById('input-url').value.trim();
+  const name = document.getElementById('input-name').value.trim();
+  const errEl = document.getElementById('scan-start-error');
+  const btn = document.getElementById('btn-start-scan');
+  errEl.textContent = '';
+
+  if (!url) { errEl.textContent = 'Please enter a company URL.'; return; }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Starting…';
+
+  try {
+    const r = await fetch(`${API}/api/scans`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ company_url: url, company_name: name || null }),
+    });
+    const d = await r.json();
+
+    if (!r.ok) {
+      errEl.textContent = d.detail || 'Could not start scan.';
+    } else {
+      lastScanId = d.scan_id;
+      localStorage.setItem('dpdp_last_scan_id', lastScanId);
+      document.getElementById('stat-last-status').textContent = 'QUEUED';
+      document.getElementById('stat-last-domain').textContent = d.approved_domain;
+      switchPage('results');
+      document.getElementById('input-scan-id').value = lastScanId;
+      lookupScan();
+    }
+  } catch (e) {
+    errEl.textContent = 'Request failed: ' + e.message;
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '<span>▶</span> Start Scan';
+}
+
+// ═══════════════ SCAN RESULTS ═══════════════
+let currentScanId = null;
+let pollTimer = null;
+
+async function lookupScan() {
+  const id = document.getElementById('input-scan-id').value.trim();
+  if (!id) return;
+  currentScanId = id;
+  await fetchScan(id);
+  clearInterval(pollTimer);
+  pollTimer = setInterval(() => fetchScan(id, true), 3000);
+}
+
+async function fetchScan(id, silent) {
+  try {
+    const r = await fetch(`${API}/api/scans/${id}`);
+    if (!r.ok) {
+      if (!silent) {
+        document.getElementById('results-body').innerHTML =
+          `<div class="empty-state"><div class="e-icon">⚠</div><div class="e-text">Scan not found.</div></div>`;
+      }
+      return;
+    }
+    const d = await r.json();
+    renderScan(d);
+
+    if (d.status === 'CRAWL_COMPLETE' || d.status === 'FAILED_CRAWL') {
+      clearInterval(pollTimer);
+    }
+
+    document.getElementById('stat-last-status').textContent = d.status;
+    document.getElementById('stat-pages').textContent = d.pages_crawled;
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+function renderScan(d) {
+  document.getElementById('results-title').textContent = `Scan ${d.scan_id.slice(0,8)}… — ${d.pages_crawled} page(s)`;
+  document.getElementById('btn-export').style.display = d.pages.length ? 'inline-flex' : 'none';
+
+  const badge = `<span class="status-badge status-${d.status}">${d.status.replace('_',' ')}</span>`;
+
+  if (!d.pages.length) {
+    document.getElementById('results-body').innerHTML = `
+      <div class="empty-state">
+        <div class="e-icon">◷</div>
+        <div class="e-text">${badge}<br><br>${d.status === 'FAILED_CRAWL' ? (d.error_message || 'Crawl failed.') : 'Crawling in progress — this refreshes automatically.'}</div>
+      </div>`;
+    return;
+  }
+
+  const rows = d.pages.map(p => `
+    <tr>
+      <td class="cell-url">${p.url}</td>
+      <td>${p.status_code ?? '—'}</td>
+      <td>${p.title ? escapeHtml(p.title) : '<span style="color:var(--muted)">—</span>'}</td>
+      <td>${p.priority_match ? `<span class="tag-priority">${p.priority_match}</span>` : ''}</td>
+      <td>${p.fetch_error ? `<span style="color:var(--red);font-size:12px;">${escapeHtml(p.fetch_error)}</span>` : ''}</td>
+    </tr>`).join('');
+
+  document.getElementById('results-body').innerHTML = `
+    <div style="padding:14px 22px 0;">${badge}</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>URL</th><th>Status</th><th>Title</th><th>Match</th><th>Error</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
+}
+
+function escapeHtml(s) {
+  return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function toggleExportMenu() {
+  document.getElementById('export-menu').classList.toggle('open');
+}
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.export-wrap')) document.getElementById('export-menu').classList.remove('open');
+});
+
+function exportScan(format) {
+  if (!currentScanId) return;
+  window.open(`${API}/api/scans/${currentScanId}/export?format=${format}`, '_blank');
+  document.getElementById('export-menu').classList.remove('open');
+}
+
+// ═══════════════ CHECKLIST — DPDP ACT KEY CLAUSES ═══════════════
+const CLAUSES = [
+  {
+    id: 'notice', tag: '§5',
+    title: 'Itemised Notice at Collection',
+    desc: 'A clear, plain-language notice describing what personal data is collected and why must be given before or at the time consent is sought.',
+    full: 'Section 5 requires a Data Fiduciary to give the Data Principal a notice, in clear and plain language, describing the personal data being collected and the purpose of processing — along with how to exercise rights and lodge a complaint with the Data Protection Board. Where consent was obtained before the Act commenced, an itemised notice must still be given as soon as reasonably practicable. The notice may be given in English or any language listed in the Eighth Schedule to the Constitution.'
+  },
+  {
+    id: 'consent', tag: '§6',
+    title: 'Free, Specific & Withdrawable Consent',
+    desc: 'Consent must be freely given, specific, informed, unconditional and unambiguous, with a clear affirmative action — and as easy to withdraw as to give.',
+    full: 'Section 6 requires consent to be free, specific, informed, unconditional and unambiguous, indicated through clear affirmative action, and limited to what is necessary for the stated purpose. A Data Principal may withdraw consent at any time, and the withdrawal process must be at least as easy as giving consent. Where processing is based on a contract, consent may be routed through a "Consent Manager" registered with the Data Protection Board.'
+  },
+  {
+    id: 'legit-use', tag: '§7',
+    title: 'Legitimate Uses Without Consent',
+    desc: 'A limited set of situations — voluntarily provided data, state functions, medical emergencies, employment purposes — permit processing without explicit consent.',
+    full: 'Section 7 lists specific "legitimate uses" that do not require consent, including: personal data voluntarily provided by the Data Principal for a specified purpose (without indicating objection); processing by the State for subsidies, benefits, licences, certificates or permits; compliance with any law or judgment; responding to a medical emergency or public health event; and employment-related purposes such as recruitment, HR administration, or safeguarding the employer against loss.'
+  },
+  {
+    id: 'children', tag: '§9',
+    title: "Children's Data & Parental Consent",
+    desc: 'Processing personal data of anyone under 18 requires verifiable parental/guardian consent — with no behavioural tracking or targeted ads to children.',
+    full: "Section 9 mandates verifiable consent from a parent or lawful guardian before processing a child's (under-18) personal data. It prohibits processing likely to cause detrimental effect on a child's wellbeing, and bars tracking, behavioural monitoring of children, and targeted advertising directed at children. The Central Government may, by rules, exempt certain classes of fiduciaries or purposes from parts of this obligation, subject to conditions."
+  },
+  {
+    id: 'security', tag: '§8(5)–(6)',
+    title: 'Security Safeguards & Breach Notification',
+    desc: 'Reasonable security safeguards must be in place, and any personal data breach must be reported to the Data Protection Board and affected individuals.',
+    full: 'Section 8 requires a Data Fiduciary to protect personal data through "reasonable security safeguards" to prevent a personal data breach. In the event of a breach, the Fiduciary must notify the Data Protection Board of India and each affected Data Principal, in the form and manner to be prescribed by rules.'
+  },
+  {
+    id: 'retention', tag: '§8(7)',
+    title: 'Storage Limitation & Erasure',
+    desc: 'Personal data must be erased once its purpose is no longer served (or consent is withdrawn), unless retention is required by law.',
+    full: 'Under Section 8(7), a Data Fiduciary must erase personal data on withdrawal of consent, or as soon as the specified purpose is no longer being served — whichever is earlier — unless retention is necessary for compliance with any law. The Fiduciary must also ensure any data processor it has engaged erases the data it holds on the Fiduciary\'s behalf.'
+  },
+  {
+    id: 'contact', tag: '§8(9)',
+    title: 'Published Grievance / DPO Contact',
+    desc: 'A Data Protection Officer or other authorised contact must be published so Data Principals can raise questions or complaints.',
+    full: "Section 8(9) requires publication of the business contact details of a Data Protection Officer, where applicable, or another person who is able to respond on the Fiduciary's behalf to questions the Data Principal may have about the processing of their personal data."
+  },
+  {
+    id: 'sdf', tag: '§10',
+    title: 'Significant Data Fiduciary Obligations',
+    desc: 'If notified as a Significant Data Fiduciary, additional duties apply: an India-based DPO, an independent data auditor, and periodic impact assessments.',
+    full: 'Section 10 allows the Central Government to notify certain Fiduciaries as "Significant Data Fiduciaries" based on factors like volume and sensitivity of data processed, and risk to Data Principal rights. Significant Data Fiduciaries must appoint a Data Protection Officer based in India who reports to the Board of Directors, appoint an independent data auditor, and carry out periodic Data Protection Impact Assessments and compliance audits.'
+  },
+  {
+    id: 'rights', tag: '§11–14',
+    title: 'Data Principal Rights',
+    desc: 'Individuals have rights to access a summary of their data, request correction/erasure, seek grievance redressal, and nominate another person for their rights.',
+    full: 'Sections 11–14 give Data Principals the right to obtain a summary of the personal data being processed and related processing activities; the right to correction, completion, updating and erasure; the right to readily available means of grievance redressal (which must be exhausted with the Fiduciary before approaching the Board); and the right to nominate another individual to exercise these rights in the event of death or incapacity.'
+  },
+  {
+    id: 'transfer', tag: '§16',
+    title: 'Cross-Border Data Transfer',
+    desc: 'Transfers of personal data outside India are generally allowed, except to countries specifically restricted by the Central Government.',
+    full: 'Section 16 takes a "blacklist" approach: a Data Fiduciary may transfer personal data for processing to any country or territory outside India, except where the Central Government has restricted such transfer by notification. Sector-specific restrictions under other laws (e.g. RBI data localisation rules) continue to apply independently.'
+  },
+  {
+    id: 'penalties', tag: 'Schedule',
+    title: 'Financial Penalties for Non-Compliance',
+    desc: 'Penalties can reach ₹250 crore for security-safeguard failures and ₹200 crore for breaches of children\'s data obligations, set by the Data Protection Board.',
+    full: 'The Schedule to the Act prescribes monetary penalties decided by the Data Protection Board of India after inquiry — including up to ₹250 crore for failing to take reasonable security safeguards resulting in a breach, up to ₹200 crore for breach of children\'s data obligations, and further slabs (e.g. ₹150 crore, ₹50 crore) for other specific contraventions such as failure to notify a breach or failure to meet additional Significant Data Fiduciary obligations.'
+  },
+];
+
+const STORAGE_KEY = 'dpdp_checklist_verified';
+
+function getVerifiedSet() {
+  try { return new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')); }
+  catch { return new Set(); }
+}
+function saveVerifiedSet(set) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify([...set]));
+}
+
+function renderChecklist() {
+  const verified = getVerifiedSet();
+  const list = document.getElementById('clause-list');
+
+  list.innerHTML = CLAUSES.map(c => `
+    <div class="clause-card ${verified.has(c.id) ? 'verified' : ''}" id="card-${c.id}">
+      <div class="clause-head" onclick="toggleExpand('${c.id}', event)">
+        <div class="clause-check" onclick="toggleVerified('${c.id}', event)">✓</div>
+        <div class="clause-tag">${c.tag}</div>
+        <div class="clause-main">
+          <div class="clause-title">${c.title}</div>
+          <div class="clause-desc">${c.desc}</div>
+        </div>
+        <div class="clause-chevron">▾</div>
+      </div>
+      <div class="clause-full">${c.full}</div>
+    </div>
+  `).join('');
+
+  updateProgress();
+}
+
+function toggleExpand(id, event) {
+  if (event.target.classList.contains('clause-check')) return;
+  document.getElementById('card-' + id).classList.toggle('expanded');
+}
+
+function toggleVerified(id, event) {
+  event.stopPropagation();
+  const verified = getVerifiedSet();
+  if (verified.has(id)) verified.delete(id); else verified.add(id);
+  saveVerifiedSet(verified);
+  document.getElementById('card-' + id).classList.toggle('verified');
+  updateProgress();
+}
+
+function updateProgress() {
+  const verified = getVerifiedSet();
+  const count = verified.size;
+  const total = CLAUSES.length;
+  document.getElementById('cl-count').textContent = count;
+  document.getElementById('cl-total').textContent = total;
+  document.getElementById('cl-bar').style.width = `${(count/total)*100}%`;
+  document.getElementById('stat-checklist').textContent = `${Math.round((count/total)*100)}%`;
+  document.getElementById('stat-checklist-sub').textContent = `${count} of ${total} clauses verified`;
+}
+
+// ═══════════════ INIT ═══════════════
+renderChecklist();
+if (lastScanId) {
+  document.getElementById('input-scan-id').value = lastScanId;
+}
+</script>
+</body>
+</html>
